@@ -153,12 +153,12 @@ class SignUpViewController:UIViewController, UITextFieldDelegate{
                 changeRequest?.commitChanges { error in
                     if error == nil {
                         print("User display name changed!")
-                        self.dismiss(animated: false, completion: nil)
+                        self.navigationController?.popViewController(animated: false)
                     } else {
                         print("Error: \(error!.localizedDescription)")
                     }
-                }                
-                self.performSegue(withIdentifier: "toHomeScreen", sender: self)
+                }
+               
             } else {
                 print("Error: \(error!.localizedDescription)")
             }

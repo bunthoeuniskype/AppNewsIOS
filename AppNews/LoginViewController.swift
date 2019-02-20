@@ -140,8 +140,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         Auth.auth().signIn(withEmail: email, password: pass) { user, error in
             if error == nil && user != nil {
-                self.dismiss(animated: false, completion: nil)
-                self.performSegue(withIdentifier: "toHomeScreen", sender: self)
+               self.navigationController?.popViewController(animated: false)
             } else {
                 print("Error logging in: \(error!.localizedDescription)")
             }

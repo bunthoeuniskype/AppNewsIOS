@@ -12,12 +12,14 @@ import Firebase
 
 class HomeViewController:UIViewController {
     
+    @IBAction func handleLogout(_ sender: Any) {
+         try! Auth.auth().signOut()
+        
+         self.navigationController?.popViewController(animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    @IBAction func handleLogout(_ sender:Any) {
-        try! Auth.auth().signOut()
-        self.dismiss(animated: false, completion: nil)
-    }
 }

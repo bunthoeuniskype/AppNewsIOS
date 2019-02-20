@@ -129,17 +129,19 @@
         <scene sceneID="tYz-AV-78G">
             <objects>
                 <viewController id="qbC-9J-XBU" customClass="HomeViewController" customModule="AppNews" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9SK-20-4d8">
+                    <view key="view" contentMode="scaleToFill" id="QC0-1s-Six">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="pMO-e7-Qtd"/>
+                        <viewLayoutGuide key="safeArea" id="o27-6i-bC8"/>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="Sly-EB-Tkj"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Home" id="84E-2K-WwP">
-                        <barButtonItem key="rightBarButtonItem" title="Sgn out" id="n49-ku-9xk"/>
+                        <barButtonItem key="rightBarButtonItem" title="Sgn out" id="n49-ku-9xk">
+                            <connections>
+                                <action selector="handleLogout:" destination="qbC-9J-XBU" id="Gjg-d6-tbu"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
