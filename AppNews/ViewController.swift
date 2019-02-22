@@ -31,9 +31,9 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let user = Auth.auth().currentUser {
-            self.performSegue(withIdentifier: "toHomeScreen", sender: self)
-        }
+//        if let user = Auth.auth().currentUser {
+//            self.performSegue(withIdentifier: "toHomeScreen", sender: self)
+//        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

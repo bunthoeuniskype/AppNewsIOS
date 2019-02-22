@@ -189,6 +189,7 @@ class SignUpViewController:UIViewController, UITextFieldDelegate{
                                 }
                                 
                             } else {
+                                self.resetForm()
                                 print("Error: \(error!.localizedDescription)")
                             }
                         }
@@ -199,6 +200,7 @@ class SignUpViewController:UIViewController, UITextFieldDelegate{
                 }
 
             } else {
+                self.resetForm()
                 print("Error: \(error!.localizedDescription)")
             }
         }
@@ -210,10 +212,10 @@ class SignUpViewController:UIViewController, UITextFieldDelegate{
         
             let storageRef = Storage.storage().reference().child("user/\(uid)")
             guard let imageData = UIImageJPEGRepresentation(image, 0.75) else { return }
-            
+        
             let metaData = StorageMetadata()
             metaData.contentType = "image/jpg"
-            
+        
             storageRef.putData(imageData, metadata: metaData) { metaData, error in
                 if error == nil, metaData != nil {
                     storageRef.downloadURL(completion: { (url, error) in
@@ -258,5 +260,15 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
         }
         
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func resetForm() {
+        let alert = UIAlertController(title: "Error Signing up", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+        setContinueButton(enabled: true)
+        continueButton.setTitle("Continue", for: .normal)
+        activityView.stopAnimating()
     }
 }
