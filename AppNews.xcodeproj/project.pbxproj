@@ -18,6 +18,7 @@
 		84A434F42222957D00FD4DE1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A434F32222957D00FD4DE1 /* UserService.swift */; };
 		84A434F6222295FD00FD4DE1 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A434F5222295FD00FD4DE1 /* UserProfile.swift */; };
 		84C2F9AE221D9E6E00D45969 /* RoundedWhiteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C2F9AD221D9E6E00D45969 /* RoundedWhiteButton.swift */; };
+		84E34CC72222F1BA00D1B48B /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E34CC62222F1BA00D1B48B /* ImageService.swift */; };
 		84E4A2EE221DB531006D86AD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A2ED221DB531006D86AD /* HomeViewController.swift */; };
 		84F39C4E221C401800167498 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F39C4D221C401800167498 /* AppDelegate.swift */; };
 		84F39C50221C401800167498 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F39C4F221C401800167498 /* ViewController.swift */; };
@@ -64,6 +65,7 @@
 		84A434F32222957D00FD4DE1 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		84A434F5222295FD00FD4DE1 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		84C2F9AD221D9E6E00D45969 /* RoundedWhiteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedWhiteButton.swift; sourceTree = "<group>"; };
+		84E34CC62222F1BA00D1B48B /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		84E4A2ED221DB531006D86AD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		84F39C4A221C401700167498 /* AppNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F39C4D221C401800167498 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		84E34CC52222F12400D1B48B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				84E34CC62222F1BA00D1B48B /* ImageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		84F39C41221C401700167498 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +161,7 @@
 		84F39C4C221C401700167498 /* AppNews */ = {
 			isa = PBXGroup;
 			children = (
+				84E34CC52222F12400D1B48B /* Services */,
 				84A434F122228CCB00FD4DE1 /* PostViewController.swift */,
 				846710F222225AFE00224E55 /* Models */,
 				84535241221EFAB900098839 /* user-profile.png */,
@@ -446,6 +457,7 @@
 				84F39C4E221C401800167498 /* AppDelegate.swift in Sources */,
 				84A434F42222957D00FD4DE1 /* UserService.swift in Sources */,
 				84F39C83221C48E500167498 /* SignUpViewController.swift in Sources */,
+				84E34CC72222F1BA00D1B48B /* ImageService.swift in Sources */,
 				84A434F6222295FD00FD4DE1 /* UserProfile.swift in Sources */,
 				846710F422225B1800224E55 /* Post.swift in Sources */,
 				84E4A2EE221DB531006D86AD /* HomeViewController.swift in Sources */,
