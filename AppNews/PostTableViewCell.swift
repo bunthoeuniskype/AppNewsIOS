@@ -30,7 +30,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func set(post:Post) {
-        usernameLabel.text = post.author
+        usernameLabel.text = post.author.username
         postTextLabel.text = post.text
     }
     

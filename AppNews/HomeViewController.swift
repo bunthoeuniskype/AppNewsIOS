@@ -14,11 +14,7 @@ class HomeViewController:UIViewController, UITableViewDelegate, UITableViewDataS
     
      var tableView:UITableView!
     
-    var posts = [
-        Post(id: "1", author: "Donald Trump", text: "Bigly!"),
-        Post(id: "2", author: "Luke Skywalker", text: "I did not like the Last Jedi! Because I did not get to use my awesome Jedi powers!"),
-        Post(id: "3", author: "Drizzy Drake", text: "Spittin that fire while a smoke by the fire")
-    ]
+    var posts = [Post]()
    
     
     @IBAction func handleLogout(_ sender: Any) {
@@ -55,9 +51,38 @@ class HomeViewController:UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-        
+        observePosts() 
     }
     
+    func observePosts() {
+        let postsRef = Database.database().reference().child("posts")
+        
+        postsRef.observe(.value, with: { snapshot in
+            
+            var tempPosts = [Post]()
+            
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                    let dict = childSnapshot.value as? [String:Any],
+                    let author = dict["author"] as? [String:Any],
+                    let uid = author["uid"] as? String,
+                    let username = author["username"] as? String,
+                    let photoURL = author["photoURL"] as? String,
+                    let url = URL(string:photoURL),
+                    let text = dict["text"] as? String,
+                    let timestamp = dict["timestamp"] as? Double {
+                    
+                    let userProfile = UserProfile(uid: uid, username: username, photoURL: url)
+                    let post = Post(id: childSnapshot.key, author: userProfile, text: text, timestamp:timestamp)
+                    tempPosts.append(post)
+                }
+            }
+            
+            self.posts = tempPosts
+            self.tableView.reloadData()
+            
+        })
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

@@ -147,19 +147,70 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="o27-6i-bC8"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="6RQ-7P-gzg"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Home" id="84E-2K-WwP">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="X5A-UF-OQf">
+                            <connections>
+                                <segue destination="hlx-Q9-fy3" kind="show" id="pyj-aL-bJA"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Sgn out" id="n49-ku-9xk">
                             <connections>
                                 <action selector="handleLogout:" destination="qbC-9J-XBU" id="Gjg-d6-tbu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gki-O5-KSu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2455" y="245"/>
+        </scene>
+        <!--Create Post-->
+        <scene sceneID="RqT-tW-3Ra">
+            <objects>
+                <viewController id="hlx-Q9-fy3" customClass="PostViewController" customModule="AppNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6JH-hN-PUf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d37-EM-Z8P">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                            </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CZq-uH-iJF">
+                                <rect key="frame" x="8" y="72" width="359" height="538"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="d37-EM-Z8P" firstAttribute="bottom" secondItem="npv-Mn-XpV" secondAttribute="top" id="23J-C4-0ri"/>
+                            <constraint firstItem="npv-Mn-XpV" firstAttribute="bottom" secondItem="CZq-uH-iJF" secondAttribute="bottom" constant="8" id="5ar-3c-1pT"/>
+                            <constraint firstItem="CZq-uH-iJF" firstAttribute="leading" secondItem="npv-Mn-XpV" secondAttribute="leading" constant="8" id="VxH-Yr-leu"/>
+                            <constraint firstItem="CZq-uH-iJF" firstAttribute="top" secondItem="d37-EM-Z8P" secondAttribute="bottom" constant="8" id="YXk-0k-kg2"/>
+                            <constraint firstItem="d37-EM-Z8P" firstAttribute="leading" secondItem="6JH-hN-PUf" secondAttribute="leading" id="jjT-XK-Ihv"/>
+                            <constraint firstItem="npv-Mn-XpV" firstAttribute="trailing" secondItem="CZq-uH-iJF" secondAttribute="trailing" constant="8" id="pAm-Cg-c1d"/>
+                            <constraint firstItem="d37-EM-Z8P" firstAttribute="centerX" secondItem="CZq-uH-iJF" secondAttribute="centerX" id="zla-yT-qVU"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="npv-Mn-XpV"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Create Post" id="4tr-Hh-bXA">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="U1h-yZ-elL">
+                            <connections>
+                                <action selector="handlePostButton:" destination="hlx-Q9-fy3" id="QGJ-Iy-oZc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textView" destination="CZq-uH-iJF" id="d3l-2g-qQh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yCz-im-VAp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3098" y="115"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="bAF-no-yYK">
