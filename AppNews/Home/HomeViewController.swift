@@ -14,7 +14,13 @@ class HomeViewController:UIViewController, UITableViewDelegate, UITableViewDataS
     
      var tableView:UITableView!
     
+    var cellHeights: [IndexPath : CGFloat] = [:]
+    
     var posts = [Post]()
+    var fetchingMore = false
+    var endReached = false
+    let leadingScreensForBatching:CGFloat = 3.0
+    
    
     
     @IBAction func handleLogout(_ sender: Any) {
@@ -29,6 +35,7 @@ class HomeViewController:UIViewController, UITableViewDelegate, UITableViewDataS
         
         let cellNib = UINib(nibName: "PostTableViewCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "postCell")
+        tableView.register(LoadingCell.self, forCellReuseIdentifier: "loadingCell")
         tableView.backgroundColor = UIColor(white: 0.90,alpha:1.0)
         
         //self.navigationController?.view.addSubview(view)
@@ -51,13 +58,23 @@ class HomeViewController:UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-        observePosts() 
+        //observePosts()
+         beginBatchFetch()
     }
     
-    func observePosts() {
+    func fetchPosts(completion:@escaping (_ posts:[Post])->()) {
         let postsRef = Database.database().reference().child("posts")
         
-        postsRef.observe(.value, with: { snapshot in
+        var queryRef:DatabaseQuery
+        let lastPost = posts.last
+        if lastPost != nil {
+            let lastTimestamp = lastPost!.createdAt.timeIntervalSince1970 * 1000
+            queryRef = postsRef.queryOrdered(byChild: "timestamp").queryEnding(atValue: lastTimestamp).queryLimited(toLast: 20)
+        } else {
+            queryRef = postsRef.queryOrdered(byChild: "timestamp").queryLimited(toLast: 20)
+        }
+        
+        queryRef.observe(.value, with: { snapshot in
             
             var tempPosts = [Post]()
             
@@ -72,30 +89,75 @@ class HomeViewController:UIViewController, UITableViewDelegate, UITableViewDataS
                     let text = dict["text"] as? String,
                     let timestamp = dict["timestamp"] as? Double {
                     
-                    let userProfile = UserProfile(uid: uid, username: username, photoURL: url)
-                    let post = Post(id: childSnapshot.key, author: userProfile, text: text, timestamp:timestamp)
-                    tempPosts.append(post)
+                    
+                    if childSnapshot.key != lastPost?.id {
+                        let userProfile = UserProfile(uid: uid, username: username, photoURL: url)
+                        let post = Post(id: childSnapshot.key, author: userProfile, text: text, timestamp:timestamp)
+                        tempPosts.insert(post, at: 0)
+                    }
                 }
             }
             
-            self.posts = tempPosts
-            self.tableView.reloadData()
+//            self.posts = tempPosts
+//            self.tableView.reloadData()
+              return completion(tempPosts)
             
         })
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        switch section {
+        case 0:
+            return posts.count
+        case 1:
+            return fetchingMore ? 1 : 0
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath) as! PostTableViewCell
-        cell.set(post: posts[indexPath.row])
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath) as! PostTableViewCell
+            cell.set(post: posts[indexPath.row])
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! LoadingCell
+            cell.spinner.startAnimating()
+            return cell
+        }
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeights[indexPath] ?? 72.0
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.size.height * leadingScreensForBatching {
+            
+            if !fetchingMore && !endReached {
+                beginBatchFetch()
+            }
+        }
+    }
+    
+    func beginBatchFetch() {
+        fetchingMore = true
+        self.tableView.reloadSections(IndexSet(integer: 1), with: .fade)
+        
+        fetchPosts { newPosts in
+            self.posts.append(contentsOf: newPosts)
+            self.fetchingMore = false
+            self.endReached = newPosts.count == 0
+            UIView.performWithoutAnimation {
+                self.tableView.reloadData()
+            }
+        }
+    }
 }
